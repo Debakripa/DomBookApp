@@ -25,9 +25,60 @@
             </select>
         </label>
         <br>
-        <input type="submit">
+        <input type="submit" id="submit">
     </form>
+    <!-- Grid Layout -->
+    <div>
+        Title
+        Author
+        Category
+        Availability Status
+        Borrowed Days (if applicable)
+        <button onclick="verifyBook()">Verify Book</button>
+        <button onclick="deleteBook()">Delete Book</button>
+    </div>
 </body>
 <script src="commonNavBar.js"></script>
+<script>
+    const storedUser = JSON.parse(localStorage.getItem('loginData'));
+    console.log("LocalStorage Login Email: " + storedUser.userEmail);
+    console.log("LocalStorage Login Password: " + storedUser.userPassword);
+    function verifyBook() {
+        const isVerified = "Are you sure to verify this book modification?";
+        if (isVerified) {
+            document.getElementsByName("button")[0].ariaDisabled = true;
+        }
+    }
+    function deleteBook() {
+        const isVerified = "Are you sure to delete this book submission?";
+        if (isVerified) {
+
+        }
+    }
+    if (localStorage.loginData == null || storedUser['userEmail'] != "admin@empher.com") {
+        alert("Admin not logged in");
+        window.location.href = "index.html";
+    }
+    document.getElementById('submit').addEventListener('click', (event) => {
+        event.preventDefault();
+        const title = document.getElementsByTagName("input")[0].value;
+        const author = document.getElementsByTagName("input")[1].value;
+        const category = document.getElementsByTagName("select")[0].value;
+        const newBookDetails = {
+            title: title,
+            author: author,
+            category: category
+        };
+
+        fetch('https://hallowed-fast-trampoline.glitch.me/data', {
+            method: 'POST',
+            headers: 'application/json',
+            body: JSON.stringify(newBookDetails)
+        }).then(response =>
+            response.json()).then(data => alert("Book added succesfully"))
+    }).catch(error => {
+        alert("Failed to add book due to " + error);
+    });
+</script>
 
 </html>
