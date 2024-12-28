@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="navBar"></div>
+    <h1>Login Form</h1>
+    <form>
+        <label>Enter Email:
+            <input type="email" id="inputEmail">
+        </label>
+        <br>
+        <label>Enter Password:
+            <input type="password" id="inputPassword">
+        </label>
+        <input type="submit" id="submit">
+    </form>
+</body>
+<script src="commonNavBar.js"></script>
+<script>
+    document.getElementById('submit').addEventListener('click', (event) => {
+        event.preventDefault();
+        let userEmail = document.getElementsByTagName('input')[0].value;
+        let userPassword = document.getElementsByTagName('input')[1].value;
+        let loginData = {
+            'email': userEmail,
+            'password': userPassword
+        };
+        if (userEmail == "admin@empher.com" && userPassword == "empher@123") {
+            alert("Logged in as Admin");
+            localStorage.setItem('loginData', loginData);
+            window.location.href = "admin.html";
+        }
+        else if (userEmail == "user@empher.com" && userPassword == "user@123") {
+            alert('Valid User! Succesfully logged in');
+            window.location.href = 'books.html';
+            localStorage.setItem('loginData', loginData);
+        }
+        else {
+            alert("Sorry! Invalid User!");
+        }
+    });
+</script>
+
+</html>
